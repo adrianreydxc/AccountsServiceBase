@@ -76,13 +76,13 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public boolean doWithdraw(MoneyTransactionsDto moneyTransactionsDto) throws Exception {
+    public boolean doWithdraw(MoneyTransactionsDto withdrawDto) throws Exception {
      try{
-            Account account = accountServiceRepository.findById(moneyTransactionsDto.getIdAccount()).orElseThrow();
-        if(account.getBalance() < moneyTransactionsDto.getAmount()){
+            Account account = accountServiceRepository.findById(withdrawDto.getIdAccount()).orElseThrow();
+        if(account.getBalance() < withdrawDto.getAmount()){
             return false;
         }
-        account.setBalance(account.getBalance() - moneyTransactionsDto.getAmount());
+        account.setBalance(account.getBalance() - withdrawDto.getAmount());
         accountServiceRepository.save(account);
         return true;
      }catch (Exception e){
