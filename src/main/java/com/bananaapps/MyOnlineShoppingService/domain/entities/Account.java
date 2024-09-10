@@ -20,7 +20,7 @@ public class Account {
     private Long id;
     private String type;
     private LocalDate openingDate;
-    private int balance;
+    private double balance;
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
