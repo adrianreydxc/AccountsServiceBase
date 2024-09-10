@@ -42,10 +42,10 @@ logging:
 spring:
   config.activate.on-profile: prod
   datasource:
-    url: "jdbc:mysql://localhost/productos_db"
+    url: "jdbc:mysql://localhost/bank_accounts"
     driverClassName: com.mysql.cj.jdbc.Driver
-    username: productos_user
-    password: prod123
+    username: account_user
+    password: acc123
   jpa:
     show-sql: true
     database-platform: org.hibernate.dialect.MySQL5Dialect

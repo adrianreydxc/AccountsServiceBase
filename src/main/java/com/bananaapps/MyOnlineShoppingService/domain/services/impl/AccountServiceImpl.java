@@ -1,7 +1,6 @@
 package com.bananaapps.MyOnlineShoppingService.domain.services.impl;
 
-import com.bananaapps.MyOnlineShoppingService.domain.dto.request.AddMoneyDto;
-import com.bananaapps.MyOnlineShoppingService.domain.dto.request.WithdrawDto;
+import com.bananaapps.MyOnlineShoppingService.domain.dto.request.MoneyTransactionsDto;
 import com.bananaapps.MyOnlineShoppingService.domain.entities.Account;
 import com.bananaapps.MyOnlineShoppingService.domain.repositories.AccountServiceRepository;
 import com.bananaapps.MyOnlineShoppingService.domain.services.AccountService;
@@ -77,13 +76,13 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public boolean doWithdraw(WithdrawDto withdrawDto) throws Exception {
+    public boolean doWithdraw(MoneyTransactionsDto moneyTransactionsDto) throws Exception {
      try{
-            Account account = accountServiceRepository.findById(withdrawDto.getIdAccount()).orElseThrow();
-        if(account.getBalance() < withdrawDto.getAmount()){
+            Account account = accountServiceRepository.findById(moneyTransactionsDto.getIdAccount()).orElseThrow();
+        if(account.getBalance() < moneyTransactionsDto.getAmount()){
             return false;
         }
-        account.setBalance(account.getBalance() - withdrawDto.getAmount());
+        account.setBalance(account.getBalance() - moneyTransactionsDto.getAmount());
         accountServiceRepository.save(account);
         return true;
      }catch (Exception e){
@@ -103,7 +102,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public boolean addMoney(AddMoneyDto request) {
+    public boolean addMoney(MoneyTransactionsDto request) {
        try{
            Account account = accountServiceRepository.findById(request.getIdAccount()).orElseThrow();
            account.setBalance(account.getBalance() + request.getAmount());
