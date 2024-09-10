@@ -1,5 +1,6 @@
 package com.bananaapps.MyOnlineShoppingService.domain.services.impl;
 
+import com.bananaapps.MyOnlineShoppingService.domain.dto.request.AddMoneyDto;
 import com.bananaapps.MyOnlineShoppingService.domain.dto.request.WithdrawDto;
 import com.bananaapps.MyOnlineShoppingService.domain.entities.Account;
 import com.bananaapps.MyOnlineShoppingService.domain.repositories.AccountServiceRepository;
@@ -99,5 +100,18 @@ public class AccountServiceImpl implements AccountService {
         }catch (Exception e){
             return false;
         }
+    }
+
+    @Override
+    public boolean addMoney(AddMoneyDto request) {
+       try{
+           Account account = accountServiceRepository.findById(request.getIdAccount()).orElseThrow();
+           account.setBalance(account.getBalance() + request.getAmount());
+
+           accountServiceRepository.save(account);
+           return true;
+       }catch (Exception e){
+           return false;
+       }
     }
 }
