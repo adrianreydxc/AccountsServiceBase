@@ -2,6 +2,7 @@ package com.bananaapps.MyOnlineShoppingService.domain.filters;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Component
+@Profile("prod")
 public class AppFilter implements Filter {
 
     private static final Logger logger = LoggerFactory.getLogger(AppFilter.class);
@@ -29,6 +31,7 @@ public class AppFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        //Cast a HTTP para manejar el código de estado 403
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
