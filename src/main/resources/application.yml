@@ -42,7 +42,7 @@ logging:
 spring:
   config.activate.on-profile: prod
   datasource:
-    url: "jdbc:mysql://localhost/bank_accounts"
+    url: "jdbc:mysql://localhost/accounts_db"
     driverClassName: com.mysql.cj.jdbc.Driver
     username: account_user
     password: acc123

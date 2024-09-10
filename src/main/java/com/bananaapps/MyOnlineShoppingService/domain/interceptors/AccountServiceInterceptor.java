@@ -22,13 +22,12 @@ public class AccountServiceInterceptor implements HandlerInterceptor {
                         "QUERY PARAMS " + request.getQueryString() +
                         " IP" + request.getRemoteAddr()
         );
-
+        response.addHeader("accounts-request-reviewed", "true");
         return true;
     }
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        response.addHeader("accounts-request-reviewed", "true");
         logger.info("RESPONSE STATUS " + response.getStatus());
     }
 
