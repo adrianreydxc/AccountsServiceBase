@@ -1,5 +1,6 @@
 package com.bananaapps.MyOnlineShoppingService.domain.services.impl;
 
+import com.bananaapps.MyOnlineShoppingService.domain.dto.request.WithdrawDto;
 import com.bananaapps.MyOnlineShoppingService.domain.entities.Account;
 import com.bananaapps.MyOnlineShoppingService.domain.repositories.AccountServiceRepository;
 import com.bananaapps.MyOnlineShoppingService.domain.services.AccountService;
@@ -75,13 +76,13 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public boolean doWithdraw(Long accountId, double amount, Long userId) throws Exception {
+    public boolean doWithdraw(WithdrawDto withdrawDto) throws Exception {
      try{
-            Account account = accountServiceRepository.findById(accountId).orElseThrow();
-        if(account.getBalance() < amount){
+            Account account = accountServiceRepository.findById(withdrawDto.getIdAccount()).orElseThrow();
+        if(account.getBalance() < withdrawDto.getAmount()){
             return false;
         }
-        account.setBalance(account.getBalance() - amount);
+        account.setBalance(account.getBalance() - withdrawDto.getAmount());
         accountServiceRepository.save(account);
         return true;
      }catch (Exception e){
