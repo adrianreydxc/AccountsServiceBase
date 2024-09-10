@@ -1,4 +1,20 @@
 package com.bananaapps.MyOnlineShoppingService.domain.repositories;
 
-public interface AccountServiceRepository {
+import com.bananaapps.MyOnlineShoppingService.domain.entities.Account;
+import com.bananaapps.MyOnlineShoppingService.domain.entities.Customer;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public interface AccountServiceRepository extends JpaRepository<Account, Long> {
+    @Query("SELECT u FROM Account u WHERE u.owner.id = :id")
+    Optional<List<Account>> getAccountsByUser(@Param("id") Long id);
+
+    @Query("DELETE FROM Account u WHERE u.owner.id = :id")
+    void deleteAllAccountsByUser(@Param("id") Long id);
 }
