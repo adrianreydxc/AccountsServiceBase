@@ -1,14 +1,11 @@
 package com.bananaapps.MyOnlineShoppingService.domain.controllers;
 
-import com.bananaapps.MyOnlineShoppingService.domain.dto.request.WithdrawDto;
+import com.bananaapps.MyOnlineShoppingService.domain.dto.request.MoneyTransactionsDto;
 import com.bananaapps.MyOnlineShoppingService.domain.entities.Account;
-import com.bananaapps.MyOnlineShoppingService.domain.entities.Customer;
-import com.bananaapps.MyOnlineShoppingService.domain.repositories.AccountServiceRepository;
 import com.bananaapps.MyOnlineShoppingService.domain.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -27,6 +24,11 @@ public class AccountController {
     public Account getAccountById(@PathVariable("id") Long id) throws Exception {
         return accountService.getAccountById(id);
     }
+
+    @GetMapping("user/{id}")
+    public List<Account> getAccountByUserId(@PathVariable("id") Long id) throws Exception {
+        return accountService.getAccountsByUser(id);
+    }
     @PostMapping("/create")
     public boolean createAccount(@RequestBody Account account) {
         return accountService.createAccount(account);
@@ -43,7 +45,17 @@ public class AccountController {
     }
 
     @PutMapping("/addMoney")
-    public boolean addMoney(@RequestBody WithdrawDto request) throws Exception {
+    public boolean addMoney(@RequestBody MoneyTransactionsDto request) throws Exception {
+        return accountService.addMoney(request);
+    }
+
+    @PutMapping("/withdrawMoney")
+    public boolean withdrawMoney(@RequestBody MoneyTransactionsDto request) throws Exception {
         return accountService.doWithdraw(request);
+    }
+
+    @DeleteMapping("/deleteAllFromUser/{id}")
+    public boolean deleteAllFromUser(@PathVariable("id") Long id) throws Exception {
+        return accountService.deleteAllAccountByUser(id);
     }
 }

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddMoneyDto {
+public class MoneyTransactionsDto {
     private Long idAccount;
     private Long idUser;
     private double amount;
