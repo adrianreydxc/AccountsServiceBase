@@ -36,7 +36,7 @@ public class AccountController {
 
     @PutMapping("/update")
     public boolean updateAccount(@RequestBody Account account) {
-        return accountService.createAccount(account);
+        return accountService.updateAccount(account);
     }
 
     @DeleteMapping("/delete")
