@@ -1,5 +1,5 @@
 spring:
-  application.name: onlineShoppingCart
+  application.name: bank_account_service
   profiles.active: dev
 
 server:
