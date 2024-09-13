@@ -75,4 +75,12 @@ public class BaseHandlerException {
 
         return new ResponseEntity(response, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(NoSuchCustomerException.class)
+    public ResponseEntity CustomerHandlerException(NoSuchCustomerException ex){
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+
+        return new ResponseEntity(response, HttpStatus.NOT_FOUND);
+    }
 }
