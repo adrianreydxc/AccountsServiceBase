@@ -16,6 +16,7 @@ public class BaseHandlerException {
     public ResponseEntity AddMoneyHandlerException(AddMoneyException ex){
         Map<String, String> response = new HashMap<>();
         response.put("message", ex.getMessage());
+        response.put("status", HttpStatus.NOT_FOUND.toString());
 
         return new ResponseEntity(response, HttpStatus.NOT_FOUND);
     }
@@ -24,6 +25,7 @@ public class BaseHandlerException {
     public ResponseEntity DeleteHandlerException(DeleteAccountException ex){
         Map<String, String> response = new HashMap<>();
         response.put("message", ex.getMessage());
+        response.put("status", HttpStatus.NOT_FOUND.toString());
 
         return new ResponseEntity(response, HttpStatus.NOT_FOUND);
     }
@@ -32,6 +34,7 @@ public class BaseHandlerException {
     public ResponseEntity DeleteAllHandlerException(DeleteAllAccountsException ex){
         Map<String, String> response = new HashMap<>();
         response.put("message", ex.getMessage());
+        response.put("status", HttpStatus.NOT_FOUND.toString());
 
         return new ResponseEntity(response, HttpStatus.NOT_FOUND);
     }
@@ -40,6 +43,7 @@ public class BaseHandlerException {
     public ResponseEntity LoanHandlerException(LoanException ex){
         Map<String, String> response = new HashMap<>();
         response.put("message", ex.getMessage());
+        response.put("status", HttpStatus.NOT_FOUND.toString());
 
         return new ResponseEntity(response, HttpStatus.NOT_FOUND);
     }
@@ -48,6 +52,7 @@ public class BaseHandlerException {
     public ResponseEntity NewAccountException(NewAccountException ex){
         Map<String, String> response = new HashMap<>();
         response.put("message", ex.getMessage());
+        response.put("status", HttpStatus.NOT_FOUND.toString());
 
         return new ResponseEntity(response, HttpStatus.NOT_FOUND);
     }
@@ -56,6 +61,7 @@ public class BaseHandlerException {
     public ResponseEntity NoSuchAccountHandlerException(NoSuchAccountException ex){
         Map<String, String> response = new HashMap<>();
         response.put("message", ex.getMessage());
+        response.put("status", HttpStatus.NOT_FOUND.toString());
 
         return new ResponseEntity(response, HttpStatus.NOT_FOUND);
     }
@@ -64,6 +70,7 @@ public class BaseHandlerException {
     public ResponseEntity UpdateHandlerException(UpdateAccountException ex){
         Map<String, String> response = new HashMap<>();
         response.put("message", ex.getMessage());
+        response.put("status", HttpStatus.NOT_FOUND.toString());
 
         return new ResponseEntity(response, HttpStatus.NOT_FOUND);
     }
@@ -72,6 +79,7 @@ public class BaseHandlerException {
     public ResponseEntity WithDrawnHandlerException(WithDrawnException ex){
         Map<String, String> response = new HashMap<>();
         response.put("message", ex.getMessage());
+        response.put("status", HttpStatus.NOT_FOUND.toString());
 
         return new ResponseEntity(response, HttpStatus.NOT_FOUND);
     }
@@ -80,6 +88,16 @@ public class BaseHandlerException {
     public ResponseEntity CustomerHandlerException(NoSuchCustomerException ex){
         Map<String, String> response = new HashMap<>();
         response.put("message", ex.getMessage());
+        response.put("status", HttpStatus.NOT_FOUND.toString());
+
+        return new ResponseEntity(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(NoSuchAccountsException.class)
+    public ResponseEntity AccountsHandlerException(NoSuchAccountsException ex){
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        response.put("status", HttpStatus.NOT_FOUND.toString());
 
         return new ResponseEntity(response, HttpStatus.NOT_FOUND);
     }
