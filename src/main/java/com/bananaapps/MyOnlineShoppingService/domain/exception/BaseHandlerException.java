@@ -83,4 +83,12 @@ public class BaseHandlerException {
 
         return new ResponseEntity(response, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(NoSuchAccountsException.class)
+    public ResponseEntity AccountsHandlerException(NoSuchAccountsException ex){
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+
+        return new ResponseEntity(response, HttpStatus.NOT_FOUND);
+    }
 }
