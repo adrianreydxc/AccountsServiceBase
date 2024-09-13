@@ -1,11 +1,9 @@
 package com.bananaapps.MyOnlineShoppingService.domain.repositories;
 
 import com.bananaapps.MyOnlineShoppingService.domain.entities.Account;
-import com.bananaapps.MyOnlineShoppingService.domain.entities.Customer;
-import com.bananaapps.MyOnlineShoppingService.domain.exception.custom.AccountsByUserException;
 import com.bananaapps.MyOnlineShoppingService.domain.exception.custom.InsuficientBalanceException;
 import com.bananaapps.MyOnlineShoppingService.domain.exception.custom.NoSuchAccountException;
-import com.bananaapps.MyOnlineShoppingService.domain.exception.custom.WithDrawnException;
+import com.bananaapps.MyOnlineShoppingService.domain.exception.custom.WithdrawException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -37,7 +35,7 @@ public interface AccountServiceRepository extends JpaRepository<Account, Long> {
 
         if (account.getBalance() < amount) {
             List<Account> accountList = getAccountsByUser(userId).orElseThrow(
-                () -> new WithDrawnException("No existen cuentas para el usuario con id: " + userId)
+                () -> new WithdrawException("No existen cuentas para el usuario con id: " + userId)
             );
 
             double totalAmount = amount;

@@ -9,6 +9,7 @@ import com.bananaapps.MyOnlineShoppingService.domain.exception.custom.*;
 import com.bananaapps.MyOnlineShoppingService.domain.mappers.AccountMapper;
 import com.bananaapps.MyOnlineShoppingService.domain.mappers.AccountMapper;
 import com.bananaapps.MyOnlineShoppingService.domain.repositories.AccountServiceRepository;
+import com.bananaapps.MyOnlineShoppingService.domain.repositories.CustomerRepository;
 import com.bananaapps.MyOnlineShoppingService.domain.services.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,9 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
-    @Autowired
     private final AccountServiceRepository accountServiceRepository;
     private final AccountMapper accountMapper;
-
+    private final CustomerRepository customerRepository;
     @Override
     public List<AccountDto> getAllAcounts(){
         try {
@@ -59,7 +59,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AccountDto createAccount(AccountDto accountDto) {
         try {
-            Account account = AccountMapper.toEntity(accountDto);
+            Account account = AccountMapper.toEntity(accountDto, customerRepository.findById(accountDto.getOwner_id()).orElseThrow(()-> new NoSuchCustomerException("No se ha encotrado el usuario")));
             accountServiceRepository.save(account);
             return accountMapper.toDto(account);
         } catch (Exception e) {
@@ -70,7 +70,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AccountDto updateAccount(AccountDto accountDto) {
         try {
-            Account account = AccountMapper.toEntity(accountDto);
+            Account account = AccountMapper.toEntity(accountDto, customerRepository.findById(accountDto.getOwner_id()).orElseThrow(()-> new NoSuchCustomerException("No se ha encotrado el usuario")));
             Account updatedAccount = accountServiceRepository.save(account);
             return accountMapper.toDto(updatedAccount);
         }catch (Exception e){

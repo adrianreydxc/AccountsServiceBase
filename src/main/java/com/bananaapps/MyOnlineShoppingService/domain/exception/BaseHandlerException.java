@@ -3,8 +3,12 @@ package com.bananaapps.MyOnlineShoppingService.domain.exception;
 import com.bananaapps.MyOnlineShoppingService.domain.exception.custom.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -75,8 +79,8 @@ public class BaseHandlerException {
         return new ResponseEntity(response, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(WithDrawnException.class)
-    public ResponseEntity WithDrawnHandlerException(WithDrawnException ex){
+    @ExceptionHandler(WithdrawException.class)
+    public ResponseEntity WithDrawnHandlerException(WithdrawException ex){
         Map<String, String> response = new HashMap<>();
         response.put("message", ex.getMessage());
         response.put("status", HttpStatus.NOT_FOUND.toString());
@@ -111,8 +115,9 @@ public class BaseHandlerException {
         return new ResponseEntity(response, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(MethodNotValidException.class)
-    public ResponseEntity MethodNotValidHandlerException(MethodNotValidException ex){
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity MethodArgumentNotValidHandlerException(MethodArgumentNotValidException ex){
         Map<String, String> response = new HashMap<>();
         response.put("message", ex.getMessage());
         response.put("status", HttpStatus.NOT_FOUND.toString());
