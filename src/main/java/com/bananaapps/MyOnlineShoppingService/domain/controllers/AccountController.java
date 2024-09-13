@@ -26,8 +26,8 @@ public class AccountController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Account> getAccountById(@PathVariable("id") Long id) throws Exception {
-        return ResponseEntity.status(HttpStatus.OK).body(accountService.getAccountById(id));
+    public ResponseEntity<Account> getAccountById(@PathVariable("id") Long id, @RequestParam("user") Long userId) throws Exception {
+        return ResponseEntity.status(HttpStatus.OK).body(accountService.getAccountById(id, userId));
     }
 
     @GetMapping("user/{id}")

@@ -10,9 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.nio.channels.AcceptPendingException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,8 +31,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account getAccountById(Long id) {
-        return accountServiceRepository.findById(id).orElseThrow(()
+    public Account getAccountById(Long id, Long userId) {
+        return accountServiceRepository.findById(id).filter(account -> account.getOwner().getId().equals(userId)).orElseThrow(()
                 -> new NoSuchAccountException("Error al obtener la cuenta con id: " + id));
     }
 

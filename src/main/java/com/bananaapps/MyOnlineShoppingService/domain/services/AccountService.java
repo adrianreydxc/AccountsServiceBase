@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface AccountService {
     List<Account> getAllAcounts() throws Exception;
-    Account getAccountById(Long id) throws Exception;
+    Account getAccountById(Long id, Long userId) throws Exception;
     List<Account> getAccountsByUser(Long userId) throws Exception;
     boolean createAccount(Account account);
     boolean updateAccount(Account account);

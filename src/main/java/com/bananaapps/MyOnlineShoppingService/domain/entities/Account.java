@@ -6,10 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 @Data
@@ -25,8 +22,10 @@ public class Account {
 
     @NotNull(message = "La cuenta no puede ser nula")
     @NotEmpty(message = "La cuenta no puede estar vacía")
+    @Pattern(regexp = "Personal|Company", message = "Solo se admiten cuentas Personal o Company")
     private String type;
 
+    @NotNull
     @PastOrPresent(message = "La fecha de apertura no puede ser posterior al presente")
     private LocalDate openingDate;
 
