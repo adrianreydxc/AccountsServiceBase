@@ -110,4 +110,40 @@ public class BaseHandlerException {
 
         return new ResponseEntity(response, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(MethodNotValidException.class)
+    public ResponseEntity MethodNotValidHandlerException(MethodNotValidException ex){
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        response.put("status", HttpStatus.NOT_FOUND.toString());
+
+        return new ResponseEntity(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity HttpMessageNotReadableHandlerException(HttpMessageNotReadableException ex){
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        response.put("status", HttpStatus.NOT_FOUND.toString());
+
+        return new ResponseEntity(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity MethodArgumentTypeMismatchHandlerException(MethodArgumentTypeMismatchException ex){
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        response.put("status", HttpStatus.NOT_FOUND.toString());
+
+        return new ResponseEntity(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity MissingServletRequestParameterHandlerException(MissingServletRequestParameterException ex){
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        response.put("status", HttpStatus.NOT_FOUND.toString());
+
+        return new ResponseEntity(response, HttpStatus.NOT_FOUND);
+    }
 }
