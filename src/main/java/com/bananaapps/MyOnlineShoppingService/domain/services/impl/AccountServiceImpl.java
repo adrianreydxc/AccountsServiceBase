@@ -1,17 +1,21 @@
 package com.bananaapps.MyOnlineShoppingService.domain.services.impl;
 
+import com.bananaapps.MyOnlineShoppingService.domain.dto.request.LoanDto;
 import com.bananaapps.MyOnlineShoppingService.domain.dto.request.MoneyTransactionsDto;
 import com.bananaapps.MyOnlineShoppingService.domain.entities.Account;
 import com.bananaapps.MyOnlineShoppingService.domain.repositories.AccountServiceRepository;
 import com.bananaapps.MyOnlineShoppingService.domain.services.AccountService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
+    @Autowired
     private final AccountServiceRepository accountServiceRepository;
     @Override
     public List<Account> getAllAcounts() throws Exception {
@@ -112,5 +116,20 @@ public class AccountServiceImpl implements AccountService {
        }catch (Exception e){
            return false;
        }
+    }
+
+    @Override
+    public boolean checkLoan(LoanDto request) {
+       List<Account> accounts = accountServiceRepository.getAccountsByUser(request.getId()).orElseThrow();
+        double totalAmount = 0;
+        for(Account u : accounts){
+            totalAmount += u.getBalance();
+        }
+        double finalAmount = totalAmount * 0.8;
+        if(request.getAmount() < finalAmount){
+           return true;
+        }else{
+            return false;
+        }
     }
 }
