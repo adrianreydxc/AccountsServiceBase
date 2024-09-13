@@ -1,5 +1,6 @@
 package com.bananaapps.MyOnlineShoppingService.domain.services;
 
+import com.bananaapps.MyOnlineShoppingService.domain.dto.request.LoanDto;
 import com.bananaapps.MyOnlineShoppingService.domain.dto.request.MoneyTransactionsDto;
 import com.bananaapps.MyOnlineShoppingService.domain.entities.Account;
 
@@ -15,4 +16,5 @@ public interface AccountService {
     boolean doWithdraw(MoneyTransactionsDto withdrawDto) throws Exception;
     boolean deleteAllAccountByUser(Long userId);
     boolean addMoney(MoneyTransactionsDto request);
+    boolean checkLoan(LoanDto loanDto);
 }
