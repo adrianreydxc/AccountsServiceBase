@@ -60,8 +60,8 @@ public class AccountServiceImpl implements AccountService {
     public AccountDto createAccount(AccountDto accountDto) {
         try {
             Account account = AccountMapper.toEntity(accountDto);
-            Account savedAccount = accountServiceRepository.save(account);
-            return accountMapper.toDto(savedAccount);
+            accountServiceRepository.save(account);
+            return accountMapper.toDto(account);
         } catch (Exception e) {
             throw new NewAccountException("Error al crear cuenta");
         }
