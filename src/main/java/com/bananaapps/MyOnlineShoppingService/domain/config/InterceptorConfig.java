@@ -11,9 +11,9 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
     @Autowired
     AccountServiceInterceptor accountServiceInterceptor;
-
-/*    @Override
+    @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(accountServiceInterceptor).addPathPatterns("/accounts");
-    }*/
+    }
+
 }

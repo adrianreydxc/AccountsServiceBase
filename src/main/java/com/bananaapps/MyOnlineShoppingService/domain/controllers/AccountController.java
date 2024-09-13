@@ -1,61 +1,78 @@
 package com.bananaapps.MyOnlineShoppingService.domain.controllers;
 
+import com.bananaapps.MyOnlineShoppingService.domain.dto.request.LoanDto;
 import com.bananaapps.MyOnlineShoppingService.domain.dto.request.MoneyTransactionsDto;
+import com.bananaapps.MyOnlineShoppingService.domain.dto.response.AccountDto;
 import com.bananaapps.MyOnlineShoppingService.domain.entities.Account;
 import com.bananaapps.MyOnlineShoppingService.domain.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/accounts")
+@RequestMapping(
+        value = "/accounts",
+        produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+        consumes = {MediaType.APPLICATION_JSON_VALUE}
+)
 public class AccountController {
 
     @Autowired
     private AccountService accountService;
 
     @GetMapping()
-    public List<Account> getAccounts() throws Exception {
-        return accountService.getAllAcounts();
+    public ResponseEntity<List<AccountDto>> getAccounts() throws Exception {
+        return ResponseEntity.status(HttpStatus.OK).body(accountService.getAllAcounts());
     }
 
     @GetMapping("/{id}")
-    public Account getAccountById(@PathVariable("id") Long id) throws Exception {
-        return accountService.getAccountById(id);
+    public ResponseEntity<AccountDto> getAccountById(@PathVariable("id") Long id, @RequestParam("user") Long userId) throws Exception {
+        return ResponseEntity.status(HttpStatus.OK).body(accountService.getAccountById(id, userId));
     }
 
     @GetMapping("user/{id}")
-    public List<Account> getAccountByUserId(@PathVariable("id") Long id) throws Exception {
-        return accountService.getAccountsByUser(id);
+    public ResponseEntity<List<AccountDto>> getAccountByUserId(@PathVariable("id") Long id) throws Exception {
+        return ResponseEntity.status(HttpStatus.OK).body(accountService.getAccountsByUser(id));
     }
-    @PostMapping("/create")
-    public boolean createAccount(@RequestBody Account account) {
-        return accountService.createAccount(account);
-    }
-
-    @PutMapping("/update")
-    public boolean updateAccount(@RequestBody Account account) {
-        return accountService.updateAccount(account);
+    @PostMapping()
+    public ResponseEntity<AccountDto> createAccount(@Valid @RequestBody AccountDto account) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(accountService.createAccount(account));
     }
 
-    @DeleteMapping("/delete")
-    public boolean deleteAccount(@RequestBody Account account) {
-        return accountService.deleteAccount(account);
+    @PutMapping()
+    public ResponseEntity<AccountDto> updateAccount(@RequestBody AccountDto account) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(accountService.updateAccount(account));
+    }
+
+    @DeleteMapping()
+    public ResponseEntity<Boolean> deleteAccount(@RequestBody Account account) {
+        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(accountService.deleteAccount(account));
     }
 
     @PutMapping("/addMoney")
-    public boolean addMoney(@RequestBody MoneyTransactionsDto request) throws Exception {
-        return accountService.addMoney(request);
+    public ResponseEntity<Boolean> addMoney(@RequestBody MoneyTransactionsDto request) throws Exception {
+        return ResponseEntity.status(HttpStatus.CREATED).body(accountService.addMoney(request));
     }
 
     @PutMapping("/withdrawMoney")
-    public boolean withdrawMoney(@RequestBody MoneyTransactionsDto request) throws Exception {
-        return accountService.doWithdraw(request);
+    public ResponseEntity<Boolean> withdrawMoney(@RequestBody MoneyTransactionsDto request) throws Exception {
+        return ResponseEntity.status(HttpStatus.CREATED).body(accountService.doWithdraw(request));
     }
 
     @DeleteMapping("/deleteAllFromUser/{id}")
-    public boolean deleteAllFromUser(@PathVariable("id") Long id) throws Exception {
-        return accountService.deleteAllAccountByUser(id);
+    public ResponseEntity<Boolean> deleteAllFromUser(@PathVariable("id") Long id) throws Exception {
+        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(accountService.deleteAllAccountByUser(id));
     }
+
+    @PostMapping("/loan/{userId}")
+    public ResponseEntity<Boolean> isLoanAccepted(@PathVariable("userId") Long userId, @RequestBody LoanDto body) {
+        body.setId(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(accountService.checkLoan(body));
+    }
+
 }

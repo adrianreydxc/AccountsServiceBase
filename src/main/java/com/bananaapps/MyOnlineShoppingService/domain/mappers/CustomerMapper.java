@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomerMapper {
 
-    public static CustomerDto toDto (Customer customer) {
+    public static CustomerDto toDto(Customer customer) {
 
-        if(customer == null) {
+        if (customer == null) {
             return null;
         }
 
@@ -22,4 +22,15 @@ public class CustomerMapper {
                 .build();
     }
 
+    public static Customer toEntity(CustomerDto customerDto) {
+        if (customerDto == null) {
+            return null;
+        }
+
+        return Customer.builder()
+                .id(customerDto.getId())
+                .name(customerDto.getName())
+                .email(customerDto.getName())
+                .build();
+    }
 }
