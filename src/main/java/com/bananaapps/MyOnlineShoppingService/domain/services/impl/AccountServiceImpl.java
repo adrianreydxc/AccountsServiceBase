@@ -82,20 +82,25 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public boolean doWithdraw(MoneyTransactionsDto withdrawDto) {
-     try{
+/*      try{
          Account account = accountServiceRepository.findById(withdrawDto.getIdAccount()).orElseThrow(()
             -> new WithDrawnException("No se ha encontrado account en la base de datos con id: " + withdrawDto.getIdAccount()));
-        if(account.getBalance() < withdrawDto.getAmount()){
+       if(account.getBalance() < withdrawDto.getAmount()){
             throw new WithDrawnException("Balance insuficiente para hacer retiro");
             //return false;
         }
         account.setBalance(account.getBalance() - withdrawDto.getAmount());
         accountServiceRepository.save(account);
+
         return true;
-     }catch (Exception e){
+        */
+         return accountServiceRepository.doWithDrawnEvenWithAnotherAccountUser(withdrawDto.getIdAccount(),
+                 withdrawDto.getIdUser(), withdrawDto.getAmount());
+
+    /* }catch (Exception e){
          throw new WithDrawnException("Error al hacer retiro de dinero");
          //return false;
-     }
+     }*/
     }
 
     @Override

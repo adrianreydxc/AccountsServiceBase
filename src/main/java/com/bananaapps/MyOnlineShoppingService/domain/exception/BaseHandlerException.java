@@ -101,4 +101,13 @@ public class BaseHandlerException {
 
         return new ResponseEntity(response, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(InsuficientBalanceException.class)
+    public ResponseEntity InsuficientBalanceHandlerException(InsuficientBalanceException ex){
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        response.put("status", HttpStatus.NOT_FOUND.toString());
+
+        return new ResponseEntity(response, HttpStatus.NOT_FOUND);
+    }
 }
