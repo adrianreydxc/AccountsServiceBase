@@ -104,14 +104,14 @@ public class AccountServiceImpl implements AccountService {
         accountServiceRepository.save(account);
 
         return true;
-        */
-         return accountServiceRepository.doWithDrawnEvenWithAnotherAccountUser(withdrawDto.getIdAccount(),
-                 withdrawDto.getIdUser(), withdrawDto.getAmount());
-
-    /* }catch (Exception e){
+        }catch (Exception e){
          throw new WithDrawnException("Error al hacer retiro de dinero");
          //return false;
      }*/
+         boolean neededMoreAccounts = accountServiceRepository.doWithDrawnEvenWithAnotherAccountUser(withdrawDto.getIdAccount(),
+                 withdrawDto.getIdUser(), withdrawDto.getAmount());
+
+         return neededMoreAccounts;
     }
 
     @Override

@@ -40,32 +40,35 @@ public interface AccountServiceRepository extends JpaRepository<Account, Long> {
                 () -> new WithDrawnException("No existen cuentas para el usuario con id: " + userId)
             );
 
-            double remainingAmount = amount;
-            remainingAmount -= account.getBalance();
+            double totalAmount = amount;
+            totalAmount -= account.getBalance();
             account.setBalance(0);
-            this.save(account);
+            save(account);
 
             for (Account u : accountList) {
                 if (!u.getId().equals(account.getId())) {
-                    if (u.getBalance() < remainingAmount) {
-                        remainingAmount -= u.getBalance();
+                    if (u.getBalance() < totalAmount) {
+                        totalAmount -= u.getBalance();
                         u.setBalance(0);
                     } else {
-                        u.setBalance(u.getBalance() - remainingAmount);
-                        remainingAmount = 0;
+                        u.setBalance(u.getBalance() - totalAmount);
+                        totalAmount = 0;
                     }
-                    this.save(u);
+                    save(u);
 
-                    if (remainingAmount <= 0) {
+                    if (totalAmount <= 0) {
                         break;
                     }
                 }
             }
-            if (remainingAmount > 0) {
+            if (totalAmount > 0) {
                 throw new InsuficientBalanceException("Saldo insuficiente");
             }
 
             return true;
+        }else{
+            account.setBalance(account.getBalance() - amount);
+            save(account);
         }
         return false;
     }
