@@ -21,4 +21,5 @@ public interface AccountServiceRepository extends JpaRepository<Account, Long> {
     @Modifying
     @Query("DELETE FROM Account u WHERE u.owner.id = :id")
     void deleteAllAccountsByUser(@Param("id") Long id);
+
 }
