@@ -2,6 +2,7 @@ package com.bananaapps.MyOnlineShoppingService.domain.controllers;
 
 import com.bananaapps.MyOnlineShoppingService.domain.dto.request.LoanDto;
 import com.bananaapps.MyOnlineShoppingService.domain.dto.request.MoneyTransactionsDto;
+import com.bananaapps.MyOnlineShoppingService.domain.dto.response.AccountDto;
 import com.bananaapps.MyOnlineShoppingService.domain.entities.Account;
 import com.bananaapps.MyOnlineShoppingService.domain.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,26 +22,26 @@ public class AccountController {
     private AccountService accountService;
 
     @GetMapping()
-    public ResponseEntity<List<Account>> getAccounts() throws Exception {
+    public ResponseEntity<List<AccountDto>> getAccounts() throws Exception {
         return ResponseEntity.status(HttpStatus.OK).body(accountService.getAllAcounts());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Account> getAccountById(@PathVariable("id") Long id) throws Exception {
+    public ResponseEntity<AccountDto> getAccountById(@PathVariable("id") Long id) throws Exception {
         return ResponseEntity.status(HttpStatus.OK).body(accountService.getAccountById(id));
     }
 
     @GetMapping("user/{id}")
-    public ResponseEntity<List<Account>> getAccountByUserId(@PathVariable("id") Long id) throws Exception {
+    public ResponseEntity<List<AccountDto>> getAccountByUserId(@PathVariable("id") Long id) throws Exception {
         return ResponseEntity.status(HttpStatus.OK).body(accountService.getAccountsByUser(id));
     }
     @PostMapping()
-    public ResponseEntity<Boolean> createAccount(@Valid @RequestBody Account account) {
+    public ResponseEntity<AccountDto> createAccount(@Valid @RequestBody AccountDto account) {
         return ResponseEntity.status(HttpStatus.CREATED).body(accountService.createAccount(account));
     }
 
     @PutMapping()
-    public ResponseEntity<Boolean> updateAccount(@RequestBody Account account) {
+    public ResponseEntity<AccountDto> updateAccount(@RequestBody AccountDto account) {
         return ResponseEntity.status(HttpStatus.CREATED).body(accountService.updateAccount(account));
     }
 

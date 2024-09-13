@@ -2,66 +2,75 @@ package com.bananaapps.MyOnlineShoppingService.domain.services.impl;
 
 import com.bananaapps.MyOnlineShoppingService.domain.dto.request.LoanDto;
 import com.bananaapps.MyOnlineShoppingService.domain.dto.request.MoneyTransactionsDto;
+import com.bananaapps.MyOnlineShoppingService.domain.dto.response.AccountDto;
 import com.bananaapps.MyOnlineShoppingService.domain.entities.Account;
 import com.bananaapps.MyOnlineShoppingService.domain.exception.custom.*;
+import com.bananaapps.MyOnlineShoppingService.domain.mappers.AccountMapper;
 import com.bananaapps.MyOnlineShoppingService.domain.repositories.AccountServiceRepository;
 import com.bananaapps.MyOnlineShoppingService.domain.services.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.nio.channels.AcceptPendingException;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
-    @Autowired
+
     private final AccountServiceRepository accountServiceRepository;
+    private final AccountMapper accountMapper;
+
     @Override
-    public List<Account> getAllAcounts(){
-        try{
+    public List<AccountDto> getAllAcounts(){
+        try {
             List<Account> list = accountServiceRepository.findAll();
             if (list.isEmpty()) {
-                throw new NoSuchAccountsException("No hay ninguna almacenda en la base de datos");
+                throw new NoSuchAccountsException("No hay ninguna cuenta en la base de datos");
             }
-            return list;
-        }catch (Exception e){
-            throw new NoSuchAccountsException("Error al optener todas las cuentas");
+            return list.stream()
+                    .map(accountMapper::toDto)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new NoSuchAccountsException("Error al obtener todas las cuentas");
         }
     }
 
     @Override
-    public Account getAccountById(Long id) {
-        return accountServiceRepository.findById(id).orElseThrow(()
-                -> new NoSuchAccountException("Error al obtener la cuenta con id: " + id));
+    public AccountDto getAccountById(Long id) {
+        return accountMapper.toDto(
+                accountServiceRepository.findById(id)
+                        .orElseThrow(() -> new NoSuchAccountException("Error al obtener la cuenta con id: " + id))
+        );
     }
 
     @Override
-    public List<Account> getAccountsByUser(Long userId) {
-        return accountServiceRepository.getAccountsByUser(userId).orElseThrow(()
-                -> new AccountsByUserException("El usuario con id: " + userId + " no tiene ninguna account en base de datos"));
+    public List<AccountDto> getAccountsByUser(Long userId) {
+        return accountServiceRepository.getAccountsByUser(userId)
+                .orElseThrow(() -> new AccountsByUserException("El usuario con id: " + userId + " no tiene ninguna cuenta en la base de datos"))
+                .stream()
+                .map(accountMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public boolean createAccount(Account account) {
-        try{
-            accountServiceRepository.save(account);
-
-            return true;
-        }catch (NewAccountException e){
-            throw new NewAccountException("Error al crear account");
-           // return false;
+    public AccountDto createAccount(AccountDto accountDto) {
+        try {
+            Account account = AccountMapper.toEntity(accountDto);
+            Account savedAccount = accountServiceRepository.save(account);
+            return accountMapper.toDto(savedAccount);
+        } catch (Exception e) {
+            throw new NewAccountException("Error al crear cuenta");
         }
     }
 
     @Override
-    public boolean updateAccount(Account account) {
-          try{
-            accountServiceRepository.save(account);
-
-            return true;
+    public AccountDto updateAccount(AccountDto accountDto) {
+        try {
+            Account account = AccountMapper.toEntity(accountDto);
+            Account updatedAccount = accountServiceRepository.save(account);
+            return accountMapper.toDto(updatedAccount);
         }catch (Exception e){
               throw new NewAccountException("Error al actualizar account");
             //return false;
