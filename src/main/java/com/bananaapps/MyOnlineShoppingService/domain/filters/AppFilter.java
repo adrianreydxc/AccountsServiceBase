@@ -1,3 +1,4 @@
+/*
 package com.bananaapps.MyOnlineShoppingService.domain.filters;
 
 import org.slf4j.Logger;
@@ -52,3 +53,4 @@ public class AppFilter implements Filter {
         logger.info("Destroying AppFilter");
     }
 }
+*/
