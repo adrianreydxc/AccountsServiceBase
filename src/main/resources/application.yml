@@ -6,7 +6,7 @@ server:
   port: 8080
 products.openapi:
   dev-url: "http://localhost:9090"
-  prod-url: "https://localhost:8443"
+  prod-url: "https://localhost:9943"
 ---
 spring:
   config.activate.on-profile: dev
