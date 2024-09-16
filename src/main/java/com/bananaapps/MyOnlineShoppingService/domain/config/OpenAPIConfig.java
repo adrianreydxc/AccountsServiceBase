@@ -41,7 +41,7 @@ public class OpenAPIConfig {
             .title("Products Management API")
             .version("1.0")
             .contact(contact)
-            .description("This API exposes endpoints to manage products.").termsOfService("https://www.grupo1.es/terms")
+            .description("This API exposes endpoints to manage accounts service.").termsOfService("https://www.grupo1.es/terms")
             .license(mitLicense);
 
     return new OpenAPI().info(info).servers(List.of(devServer, prodServer));
