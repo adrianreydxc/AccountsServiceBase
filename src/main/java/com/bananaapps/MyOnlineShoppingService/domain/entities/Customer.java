@@ -17,6 +17,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @Builder
 @Entity
+@Schema(name = "Account", description = "Owner model")
 @Table(name = "customers")
 public class Customer {
     @Id
