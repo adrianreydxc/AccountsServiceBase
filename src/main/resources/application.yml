@@ -1,6 +1,6 @@
 spring:
   application.name: bank_account_service
-  profiles.active: prod
+  profiles.active: dev
 
 server:
   port: 8080
