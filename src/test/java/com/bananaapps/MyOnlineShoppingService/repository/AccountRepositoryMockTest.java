@@ -29,12 +29,12 @@ public class AccountRepositoryMockTest {
     }
 
     @Test
-    void deleteAllAccountsByUser_AllOk(){
+    void findAccount_AllOk(){
 
     }
 
     @Test
-    void deleteAllAccountsByUser_WrongId(){
+    void findAccount_WrongId(){
 
     }
 }
