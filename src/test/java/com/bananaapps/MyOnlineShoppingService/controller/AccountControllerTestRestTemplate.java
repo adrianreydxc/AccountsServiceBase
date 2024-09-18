@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.test.context.jdbc.Sql;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -46,6 +43,8 @@ public class AccountControllerTestRestTemplate {
         // Then
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.CREATED)));
         assertThat(response.getBody(), is(true));
+        assertThat(response.getHeaders().getContentType(), is(equalTo(MediaType.APPLICATION_JSON)));
+        assertThat(response.getBody(), is(notNullValue()));
     }
 
     @Test
@@ -54,7 +53,7 @@ public class AccountControllerTestRestTemplate {
         MoneyTransactionsDto request = new MoneyTransactionsDto();
         request.setIdAccount(1L);
         request.setIdUser(1L);
-        request.setAmount(50.0);
+        request.setAmount(10.0);
 
         String url = "http://localhost:" + port + "/accounts/withdrawMoney";
 
@@ -70,7 +69,7 @@ public class AccountControllerTestRestTemplate {
 
     @Test
     public void givenValidUserAndLoanDto_whenCheckLoan_thenReturnOkAndTrue() {
-        // Given:
+        // Given
         Long userId = 1L;
         LoanDto loanDto = LoanDto.builder()
                 .amount(1000.0)
@@ -86,6 +85,8 @@ public class AccountControllerTestRestTemplate {
         // Then
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.OK)));
         assertThat(response.getBody(), is(true));
+        assertThat(response.getHeaders().getContentType(), is(equalTo(MediaType.APPLICATION_JSON)));
+        assertThat(response.getBody(), is(notNullValue()));
     }
 
 
