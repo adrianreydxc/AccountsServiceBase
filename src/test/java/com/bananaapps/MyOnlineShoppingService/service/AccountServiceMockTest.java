@@ -7,6 +7,7 @@ import com.bananaapps.MyOnlineShoppingService.domain.dto.response.CustomerDto;
 import com.bananaapps.MyOnlineShoppingService.domain.entities.Account;
 import com.bananaapps.MyOnlineShoppingService.domain.entities.Customer;
 import com.bananaapps.MyOnlineShoppingService.domain.exception.custom.AccountsByUserException;
+import com.bananaapps.MyOnlineShoppingService.domain.exception.custom.InsuficientBalanceException;
 import com.bananaapps.MyOnlineShoppingService.domain.exception.custom.NoSuchAccountException;
 import com.bananaapps.MyOnlineShoppingService.domain.mappers.AccountMapper;
 import com.bananaapps.MyOnlineShoppingService.domain.repositories.AccountServiceRepository;
@@ -105,5 +106,33 @@ public class AccountServiceMockTest {
        assertThrows(AccountsByUserException.class, () -> {
           accountService.getAccountsByUser(23434L);
        });
+    }
+
+    @Test
+    void doWithdraw_EnoughMoneyInMainAccount_AllOk(){
+        Mockito.when(accountServiceRepository.doWithDrawnEvenWithAnotherAccountUser(1L, 1L, 900)).thenReturn(false);
+
+        boolean result = accountServiceRepository.doWithDrawnEvenWithAnotherAccountUser(1l, 1L, 900);
+
+        assertThat(result, equalTo(false));
+    }
+
+    @Test
+    void doWithdraw_NotEnoughMoneyInMainAccount_AllOk(){
+        Mockito.when(accountServiceRepository.doWithDrawnEvenWithAnotherAccountUser(1L, 1L, 1002)).thenReturn(true);
+
+        boolean result = accountServiceRepository.doWithDrawnEvenWithAnotherAccountUser(1l, 1L, 1002);
+
+        assertThat(result, equalTo(true));
+    }
+
+    @Test
+    void doWithdraw_NotEnoughMoneyInAllAccount_GetException(){
+        Mockito.when(accountServiceRepository.doWithDrawnEvenWithAnotherAccountUser(1L, 1L, 2002))
+                .thenThrow(InsuficientBalanceException.class);
+
+        assertThrows(InsuficientBalanceException.class, () -> {
+            accountServiceRepository.doWithDrawnEvenWithAnotherAccountUser(1l, 1L, 2002);
+        });
     }
 }
