@@ -11,7 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
@@ -24,20 +25,20 @@ public class AccountServiceIntegrationTest {
     @Test
     void getAllAccounts_OK() throws Exception {
         List<AccountDto> list = accountService.getAllAcounts();
-        assertThat(list).isNotNull();
-        assertThat(list.size()).isGreaterThan(0);
-        assertThat(list.get(0).getBalance()).isEqualTo(1000);
-        assertThat(list.get(0).getType()).isEqualTo("Personal");
-        assertThat(list.get(0).getOwner_id()).isEqualTo(1L);
+        assertThat(list, notNullValue());
+        assertThat(list.size(), greaterThan(0));
+        assertThat(list.get(0).getBalance(), equalTo(1000.0));
+        assertThat(list.get(0).getType(), equalTo("Personal"));
+        assertThat(list.get(0).getOwner_id(), equalTo(1L));
     }
 
     @Test
     void getAccountById_AllOk() throws Exception {
         AccountDto account = accountService.getAccountById(1L, 1L);
-        assertThat(account).isNotNull();
-        assertThat(account.getBalance()).isEqualTo(1000);
-        assertThat(account.getType()).isEqualTo("Personal");
-        assertThat(account.getOwner_id()).isEqualTo(1L);
+        assertThat(account, notNullValue());
+        assertThat(account.getBalance(), equalTo(1000.0));
+        assertThat(account.getType(), equalTo("Personal"));
+        assertThat(account.getOwner_id(), equalTo(1L));
     }
 
     @Test
@@ -57,16 +58,16 @@ public class AccountServiceIntegrationTest {
     @Test
     void getAccountsByUser_AllOK() throws Exception {
         List<AccountDto> accounts = accountService.getAccountsByUser(1L);
-        assertThat(accounts).isNotNull();
-        assertThat(accounts.size()).isGreaterThan(0);
-        assertThat(accounts.get(0).getBalance()).isEqualTo(1000);
-        assertThat(accounts.get(0).getType()).isEqualTo("Personal");
-        assertThat(accounts.get(0).getOwner_id()).isEqualTo(1L);
+        assertThat(accounts, notNullValue());
+        assertThat(accounts.size(), greaterThan(0));
+        assertThat(accounts.get(0).getBalance(), equalTo(1000.0));
+        assertThat(accounts.get(0).getType(), equalTo("Personal"));
+        assertThat(accounts.get(0).getOwner_id(), equalTo(1L));
     }
 
     @Test
     void getAccountsByUser_WrongUserId() throws Exception {
       List<AccountDto> list = accountService.getAccountsByUser(23423432432L);
-      assertThat(list.size()).isEqualTo(0);
+        assertThat(list.size(), equalTo(0));
     }
 }

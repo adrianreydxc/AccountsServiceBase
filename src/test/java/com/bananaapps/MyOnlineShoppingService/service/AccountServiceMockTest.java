@@ -22,7 +22,9 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import java.time.LocalDate;
 import java.util.List;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
@@ -57,22 +59,21 @@ public class AccountServiceMockTest {
     @Test
     void getAllAccounts_OK() throws Exception {
         List<AccountDto> list = accountService.getAllAcounts();
-        assertThat(list).isNotNull();
-        assertThat(list.size()).isGreaterThan(0);
-        assertThat(list.get(0).getId()).isEqualTo(1L);
-        assertThat(list.get(0).getBalance()).isEqualTo(1000);
-        assertThat(list.get(0).getType()).isEqualTo("Type");
-        assertThat(list.get(0).getOwner_id()).isEqualTo(1L);
+        assertThat(list, notNullValue());
+        assertThat(list.get(0).getBalance(), equalTo(1000.0));
+        assertThat(list.get(0).getType(), equalTo("Type"));
+        assertThat(list.get(0).getOwner_id(), equalTo(1L));
+        assertThat(list.get(0).getId(), equalTo(1L));
     }
 
     @Test
     void getAccountById_AllOk(){
         AccountDto result = accountService.getAccountById(1L, 1L);
-        assertThat(result).isNotNull();
-        assertThat(result.getId()).isEqualTo(1L);
-        assertThat(result.getBalance()).isEqualTo(1000);
-        assertThat(result.getType()).isEqualTo("Type");
-        assertThat(result.getOwner_id()).isEqualTo(1L);
+        assertThat(result, notNullValue());
+        assertThat(result.getBalance(), equalTo(1000.0));
+        assertThat(result.getType(), equalTo("Type"));
+        assertThat(result.getOwner_id(), equalTo(1L));
+        assertThat(result.getId(), equalTo(1L));
     }
 
     @Test
@@ -92,11 +93,11 @@ public class AccountServiceMockTest {
     @Test
     void getAccountsByUser_AllOK(){
         List<AccountDto> result = accountService.getAccountsByUser(1L);
-        assertThat(result).isNotNull();
-        assertThat(result.get(0).getId()).isEqualTo(1L);
-        assertThat(result.get(0).getBalance()).isEqualTo(1000);
-        assertThat(result.get(0).getType()).isEqualTo("Type");
-        assertThat(result.get(0).getOwner_id()).isEqualTo(1L);
+        assertThat(result, notNullValue());
+        assertThat(result.get(0).getBalance(), equalTo(1000.0));
+        assertThat(result.get(0).getType(), equalTo("Type"));
+        assertThat(result.get(0).getOwner_id(), equalTo(1L));
+        assertThat(result.get(0).getId(), equalTo(1L));
     }
 
     @Test

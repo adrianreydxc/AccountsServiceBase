@@ -24,6 +24,9 @@ public class AccountRepositoryIntegrationTest {
                 () -> new AccountsByUserException("This exception shouldn't be visible")
         );
         assertThat(accounts.size(), greaterThan(0));
+        assertThat(accounts.get(0).getBalance(), equalTo(1000.0));
+        assertThat(accounts.get(0).getType(), equalTo("Personal"));
+        assertThat(accounts.get(0).getOwner().getId(), equalTo(1L));
     }
 
     @Test
