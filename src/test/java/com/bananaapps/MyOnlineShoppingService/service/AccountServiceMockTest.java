@@ -10,7 +10,6 @@ import com.bananaapps.MyOnlineShoppingService.domain.exception.custom.AccountsBy
 import com.bananaapps.MyOnlineShoppingService.domain.exception.custom.NoSuchAccountException;
 import com.bananaapps.MyOnlineShoppingService.domain.mappers.AccountMapper;
 import com.bananaapps.MyOnlineShoppingService.domain.repositories.AccountServiceRepository;
-import com.bananaapps.MyOnlineShoppingService.domain.services.AccountService;
 import com.bananaapps.MyOnlineShoppingService.domain.services.impl.AccountServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,15 +20,8 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
-import static org.hamcrest.Matchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -67,6 +59,10 @@ public class AccountServiceMockTest {
         List<AccountDto> list = accountService.getAllAcounts();
         assertThat(list).isNotNull();
         assertThat(list.size()).isGreaterThan(0);
+        assertThat(list.get(0).getId()).isEqualTo(1L);
+        assertThat(list.get(0).getBalance()).isEqualTo(1000);
+        assertThat(list.get(0).getType()).isEqualTo("Type");
+        assertThat(list.get(0).getOwner_id()).isEqualTo(1L);
     }
 
     @Test
@@ -74,6 +70,9 @@ public class AccountServiceMockTest {
         AccountDto result = accountService.getAccountById(1L, 1L);
         assertThat(result).isNotNull();
         assertThat(result.getId()).isEqualTo(1L);
+        assertThat(result.getBalance()).isEqualTo(1000);
+        assertThat(result.getType()).isEqualTo("Type");
+        assertThat(result.getOwner_id()).isEqualTo(1L);
     }
 
     @Test
@@ -95,6 +94,9 @@ public class AccountServiceMockTest {
         List<AccountDto> result = accountService.getAccountsByUser(1L);
         assertThat(result).isNotNull();
         assertThat(result.get(0).getId()).isEqualTo(1L);
+        assertThat(result.get(0).getBalance()).isEqualTo(1000);
+        assertThat(result.get(0).getType()).isEqualTo("Type");
+        assertThat(result.get(0).getOwner_id()).isEqualTo(1L);
     }
 
     @Test
