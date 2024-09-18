@@ -26,6 +26,9 @@ public class AccountServiceIntegrationTest {
         List<AccountDto> list = accountService.getAllAcounts();
         assertThat(list).isNotNull();
         assertThat(list.size()).isGreaterThan(0);
+        assertThat(list.get(0).getBalance()).isEqualTo(1000);
+        assertThat(list.get(0).getType()).isEqualTo("Personal");
+        assertThat(list.get(0).getOwner_id()).isEqualTo(1L);
     }
 
     @Test
@@ -33,6 +36,8 @@ public class AccountServiceIntegrationTest {
         AccountDto account = accountService.getAccountById(1L, 1L);
         assertThat(account).isNotNull();
         assertThat(account.getBalance()).isEqualTo(1000);
+        assertThat(account.getType()).isEqualTo("Personal");
+        assertThat(account.getOwner_id()).isEqualTo(1L);
     }
 
     @Test
@@ -54,6 +59,9 @@ public class AccountServiceIntegrationTest {
         List<AccountDto> accounts = accountService.getAccountsByUser(1L);
         assertThat(accounts).isNotNull();
         assertThat(accounts.size()).isGreaterThan(0);
+        assertThat(accounts.get(0).getBalance()).isEqualTo(1000);
+        assertThat(accounts.get(0).getType()).isEqualTo("Personal");
+        assertThat(accounts.get(0).getOwner_id()).isEqualTo(1L);
     }
 
     @Test
