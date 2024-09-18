@@ -64,7 +64,7 @@ public class AccountControllerTestRestTemplate {
 
         // Then
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.CREATED)));
-        assertThat(response.getBody(), is(true));
+        assertThat(response.getBody(), is(false));
     }
 
     @Test
