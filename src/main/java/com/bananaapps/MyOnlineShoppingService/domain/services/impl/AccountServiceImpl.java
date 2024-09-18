@@ -43,7 +43,8 @@ public class AccountServiceImpl implements AccountService {
     public AccountDto getAccountById(Long id, Long userId) {
         return accountMapper.toDto(
                 accountServiceRepository.findById(id)
-                        .filter(account -> account.getOwner().getId().equals(userId)).orElseThrow(() -> new NoSuchAccountException("Error al obtener la cuenta con id: " + id))
+                        .filter(account -> account.getOwner().getId().equals(userId)).orElseThrow(()
+                                -> new NoSuchAccountException("Error al obtener la cuenta con id: " + id))
         );
     }
 
