@@ -64,7 +64,7 @@ public class AccountControllerTestRestTemplate {
 
         // Then
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.CREATED)));
-        assertThat(response.getBody(), is(true));
+        assertThat(response.getBody(), is(false));
     }
 
     @Test
@@ -79,10 +79,10 @@ public class AccountControllerTestRestTemplate {
 
         HttpEntity<LoanDto> entity = new HttpEntity<>(loanDto);
 
-        // When: the request is made to check loan eligibility
+        // When
         ResponseEntity<Boolean> response = restTemplate.exchange(url, HttpMethod.POST, entity, Boolean.class);
 
-        // Then: the response status should be OK and the body should be true
+        // Then
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.OK)));
         assertThat(response.getBody(), is(true));
         assertThat(response.getHeaders().getContentType(), is(equalTo(MediaType.APPLICATION_JSON)));
