@@ -3,6 +3,7 @@ package com.bananaapps.MyOnlineShoppingService.repository;
 import com.bananaapps.MyOnlineShoppingService.domain.entities.Account;
 import com.bananaapps.MyOnlineShoppingService.domain.exception.custom.AccountsByUserException;
 import com.bananaapps.MyOnlineShoppingService.domain.repositories.AccountServiceRepository;
+import org.hibernate.type.IntegerType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,6 +31,14 @@ public class AccountRepositoryIntegrationTest {
     }
 
     @Test
+    void getAccountByUser_WrongId() {
+        List<Account> accounts = accountServiceRepository.getAccountsByUser(1000L).orElseThrow(
+                () -> new AccountsByUserException("This exception shouldn't be visible")
+        );
+        assertThat(accounts.size(), equalTo(0));
+    }
+
+    @Test
     void retirarDineroConOtraCuentaDineroDeMas_ok() {
         assertThat(
                 accountServiceRepository.doWithDrawnEvenWithAnotherAccountUser(
@@ -49,14 +58,20 @@ public class AccountRepositoryIntegrationTest {
                 ), equalTo(false)
         );
     }
-
     @Test
-    void getAccountByUser_WrongId() {
-        List<Account> accounts = accountServiceRepository.getAccountsByUser(1000L).orElseThrow(
+    void comprobarQueSeBorranCuentasUsuario() {
+        List<Account> accounts = accountServiceRepository.getAccountsByUser(1L).orElseThrow(
                 () -> new AccountsByUserException("This exception shouldn't be visible")
         );
-        assertThat(accounts.size(), equalTo(0));
+        accountServiceRepository.deleteAllAccountsByUser(1L);
+        List<Account> accounts2 = accountServiceRepository.getAccountsByUser(1L).orElseThrow(
+                () -> new AccountsByUserException("This exception shouldn't be visible")
+        );
+        assertThat(accounts.size(), greaterThan(accounts2.size()));
+        assertThat(accounts2.size(), equalTo(IntegerType.ZERO));
     }
+
+
 
     @Test
     void findAccount_AllOk() {
