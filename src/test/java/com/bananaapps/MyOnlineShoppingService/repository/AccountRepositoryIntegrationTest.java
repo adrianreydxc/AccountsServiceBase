@@ -27,6 +27,27 @@ public class AccountRepositoryIntegrationTest {
     }
 
     @Test
+    void retirarDineroConOtraCuentaDineroDeMas_ok() {
+        assertThat(
+                accountServiceRepository.doWithDrawnEvenWithAnotherAccountUser(
+                        1L,
+                        2L,
+                        1002
+                ), equalTo(true)
+        );
+    }
+    @Test
+    void retirarDineroConOtraCuentaDineroDeMenos_ok() {
+        assertThat(
+                accountServiceRepository.doWithDrawnEvenWithAnotherAccountUser(
+                        1L,
+                        2L,
+                        100
+                ), equalTo(false)
+        );
+    }
+
+    @Test
     void getAccountByUser_WrongId() {
         List<Account> accounts = accountServiceRepository.getAccountsByUser(1000L).orElseThrow(
                 () -> new AccountsByUserException("This exception shouldn't be visible")
