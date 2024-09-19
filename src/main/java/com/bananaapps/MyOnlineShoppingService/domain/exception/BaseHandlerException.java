@@ -151,4 +151,13 @@ public class BaseHandlerException {
 
         return new ResponseEntity(response, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(LoginErrorException.class)
+    public ResponseEntity LoginErrorHandlerException(LoginErrorException ex){
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        response.put("status", HttpStatus.UNAUTHORIZED.toString());
+
+        return new ResponseEntity(response, HttpStatus.UNAUTHORIZED);
+    }
 }

@@ -30,6 +30,10 @@ spring:
 server:
   port: 9900
 
+jwt:
+  secret: tWYGX2H8r/hLZI7CW+r1Tk07Vp56PJkqkoIPYJGkFLx/BuFI+81c5sWIp5RV0o/r2ZqQPsTYZwiIzzronzur8Q==
+  expiration: 86400000
+
 #debug: true
 logging:
   level.root: DEBUG

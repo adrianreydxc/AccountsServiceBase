@@ -1,4 +1,4 @@
-package com.bananaapps.MyOnlineShoppingService.domain.config;
+package com.bananaapps.MyOnlineShoppingService.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;

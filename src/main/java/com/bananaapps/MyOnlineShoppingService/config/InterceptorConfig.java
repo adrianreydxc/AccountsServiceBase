@@ -1,4 +1,4 @@
-package com.bananaapps.MyOnlineShoppingService.domain.config;
+package com.bananaapps.MyOnlineShoppingService.config;
 
 import com.bananaapps.MyOnlineShoppingService.domain.interceptors.AccountServiceInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;

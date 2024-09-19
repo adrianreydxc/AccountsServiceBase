@@ -8,6 +8,13 @@ CREATE TABLE IF NOT EXISTS customers
     email VARCHAR(255) NOT NULL UNIQUE
 );
 
+CREATE TABLE IF NOT EXISTS _user
+(
+    id  BIGINT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
+);
+
 -- Crear la tabla accounts
 CREATE TABLE IF NOT EXISTS accounts
 (
@@ -24,6 +31,12 @@ INSERT INTO customers (name, email) VALUES
 ('Adri', 'adrian@adrian.com'),
 ('Daniel', 'daniel@daniel.com'),
 ('Carol', 'carol@carol.com');
+
+INSERT INTO _user (username, password) VALUES
+('adri@adri.com', 'prueba1234'),
+('adrian@adrian.com', 'prueba1234'),
+('daniel@daniel.com', 'prueba1234'),
+('carol@carol.com', 'prueba1234');
 
 INSERT INTO accounts (type, opening_date,balance,owner_id) VALUES
 ('Personal','2023-10-01', 1000, 1),
