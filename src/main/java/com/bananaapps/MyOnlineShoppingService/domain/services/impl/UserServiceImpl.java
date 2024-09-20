@@ -20,9 +20,6 @@ public class UserServiceImpl implements UserService {
         User optionalUser = userRepository.getUserByEmail(loginDto.getUsername(), loginDto.getPassword()).orElseThrow(()
                 -> new LoginErrorException("No se ha encontrado usuario " + loginDto.getUsername() + " con el password " + loginDto.getPassword()));
 
-                return new TokenDto(jwtUtils.generateToken(optionalUser.getUsername()));
-
-
-//        return " {\"token\" : \"" + jwtUtils.generateToken(optionalUser.getUsername()) + "\"} ";
+                return new TokenDto(jwtUtils.generateToken(optionalUser));
     }
 }
